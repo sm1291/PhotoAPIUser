@@ -7,5 +7,6 @@ import io.sk.photoapp.api.users.shared.UserDto;
 public interface UsersService extends UserDetailsService {
 	UserDto createUse(UserDto userDetails);
 	UserDto getUserDetailsByEmail(String email);
+	UserDto getUserByUserId(String userId);
 
 }

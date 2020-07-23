@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
@@ -20,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.netflix.ribbon.proxy.annotation.Http;
 
+import feign.FeignException;
 import io.sk.photoapp.api.users.data.AlbumsServiceClient;
 import io.sk.photoapp.api.users.data.UserEntity;
 import io.sk.photoapp.api.users.data.UserRepository;
@@ -37,6 +40,8 @@ public class UsersServiceImplementation implements UsersService {
 	//private RestTemplate restTemplate;
 	@Autowired
 	private Environment environment;
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	public UsersServiceImplementation(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, AlbumsServiceClient albumsServiceClient) {
@@ -99,6 +104,7 @@ public class UsersServiceImplementation implements UsersService {
 		*/
 		
 		List<AlbumResponseModel> albList = albumsServiceClient.getAlbums(userId);
+		
 		userDto.setAlbums(albList);
 		return userDto;
 	}
